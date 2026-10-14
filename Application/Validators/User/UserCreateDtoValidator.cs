@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace Application.Validators.User;
 
+/// <summary>
+/// Validator class for validating the UserCreateDto object. This class inherits from AbstractValidator and defines validation rules for the properties of UserCreateDto.
+/// </summary>
 public class UserCreateDtoValidator : AbstractValidator<UserCreateDto> {
 
+	/// <summary>
+	/// Initializes a new instance of the UserCreateDtoValidator class and defines validation rules for the UserCreateDto properties.
+	/// </summary>
 	public UserCreateDtoValidator() {
 
 		RuleFor(user => user.Username)

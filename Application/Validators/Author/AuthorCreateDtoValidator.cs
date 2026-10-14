@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace Application.Validators.Author;
 
+/// <summary>
+/// Validator class for validating the AuthorCreateDto object. This class inherits from AbstractValidator and defines validation rules for the properties of AuthorCreateDto.
+/// </summary>
 public class AuthorCreateDtoValidator :  AbstractValidator<AuthorCreateDto>{
 
+	/// <summary>
+	/// Initializes a new instance of the AuthorCreateDtoValidator class and defines validation rules for the AuthorCreateDto properties.
+	/// </summary>
 	public AuthorCreateDtoValidator() {
 
 		RuleFor(author => author.Id)
