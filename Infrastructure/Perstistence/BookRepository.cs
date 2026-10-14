@@ -8,7 +8,13 @@ namespace Infrastructure.Perstistence {
     /// Repository class for managing Book entities in the database.
     /// </summary>
     /// <param name="ctx">The database context.</param>
-    public class BookRepository(LibraryDbContext ctx) : IBookRepository {
+    /// <param name="unitOfWork">The unit of work.</param>
+    public class BookRepository(LibraryDbContext ctx, IUnitOfWork unitOfWork) : IBookRepository {
+
+        /// <summary>
+        /// The unit of work used for managing transactions and saving changes to the database.
+        /// </summary>
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         /// <summary>
         /// The database context used for accessing the database.
@@ -33,7 +39,7 @@ namespace Infrastructure.Perstistence {
         /// <returns>The book with the specified ID.</returns>
         /// <exception cref="KeyNotFoundException">Thrown when a book with the specified ID is not found.</exception>
         public async Task<Book> GetByIdAsync(int id) {
-            
+
              return await _ctx.Books
                 .Include(b => b.Author)
                 .FirstOrDefaultAsync(b => b.BookId == id);
@@ -42,6 +48,7 @@ namespace Infrastructure.Perstistence {
         public async Task CreateAsync(Book entity) {
 
             await _ctx.Books.AddAsync(entity);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         /// <summary>

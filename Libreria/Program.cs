@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Application;
 using Application.Validators.User;
 using FluentValidation;
@@ -32,8 +33,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.MapControllers();
-
 app.MapScalarApiReference();
-
 app.Run();

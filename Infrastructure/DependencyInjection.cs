@@ -27,6 +27,7 @@ namespace Infrastructure {
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

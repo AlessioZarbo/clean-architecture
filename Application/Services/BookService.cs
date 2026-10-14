@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Author;
 using Application.DTO.Book;
+using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Interfaces;
@@ -39,10 +40,10 @@ namespace Application.Services {
         /// <returns>The BookDto object.</returns>
         /// <exception cref="Exception">The exception that is thrown when the book is not found.</exception>
         public async Task<BookDto> GetBookByIdAsync(int id) {
-            
+
             var book = await _bookRepository.GetByIdAsync(id);
             if (book == null) {
-                throw new Exception($"Book with ID {id} not found.");
+                throw new NotFoundException(typeof(Book), id);
             }
 
             return MapToDto(book);
@@ -54,7 +55,7 @@ namespace Application.Services {
         /// <param name="bookDto">The BookCreateDto object containing the book's data.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateBookAsync(BookCreateDto bookDto) => await _bookRepository.CreateAsync(MapToEntity(bookDto));
-        
+
 
         /// <summary>
         /// Updates an existing book in the repository based on the provided BookCreateDto object.
