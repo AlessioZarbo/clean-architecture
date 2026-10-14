@@ -22,6 +22,15 @@ builder.Services.AddValidatorsFromAssemblyContaining<UserCreateDtoValidator>();
 // Attiva l'automazione MVC
 builder.Services.AddFluentValidationAutoValidation();
 
+// Configura il logging per l'applicazione
+builder.Logging
+    .ClearProviders()
+    .AddSimpleConsole(options => {
+        options.IncludeScopes = true;
+        options.SingleLine = true;
+        options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+    });
+
 var app = builder.Build();
 
 

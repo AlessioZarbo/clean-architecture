@@ -4,6 +4,7 @@ using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services {
 
@@ -11,12 +12,18 @@ namespace Application.Services {
     /// Represents a service for managing books, providing methods for creating, retrieving, updating, and deleting books.
     /// </summary>
     /// <param name="bookRepository">The repository for accessing book data.</param>
-    public class BookService(IBookRepository bookRepository) : IBookService {
+    /// <param name="logger">The logger for logging information and errors.</param>
+    public class BookService(IBookRepository bookRepository, ILogger<BookService> logger) : IBookService {
 
         /// <summary>
         /// The repository for accessing book data.
         /// </summary>
         private readonly IBookRepository _bookRepository = bookRepository;
+
+        /// <summary>
+        /// The logger for logging information and errors.
+        /// </summary>
+        private readonly ILogger<BookService> _logger =  logger;
 
         /// <summary>
         /// Retrieves all books from the repository and maps them to BookDto objects.
@@ -25,12 +32,13 @@ namespace Application.Services {
         /// <exception cref="Exception">The exception that is thrown when no books are found.</exception>
         public async Task<IEnumerable<BookDto>> GetAllBooksAsync() {
 
+            _logger.LogInformation("Retrieving all books.");
+            _logger.LogDebug("Retrieving all books from the database.");
             var books = await _bookRepository.GetAllAsync();
-            if (books == null) {
-                throw new Exception("No books found.");
-            }
 
-            return books.Select(MapToDto);
+            _logger.LogInformation("All books retrieved.");
+            _logger.LogDebug("Mapped books to DTOs.");
+            return books == null ? throw new Exception("No books found.") : books.Select(MapToDto);
         }
 
         /// <summary>

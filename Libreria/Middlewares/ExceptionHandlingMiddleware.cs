@@ -15,12 +15,19 @@ public class ExceptionHandlingMiddleware {
 	private readonly RequestDelegate _next;
 
 	/// <summary>
+	/// The logger for logging exception details.
+	/// </summary>
+	private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
+	/// <summary>
 	/// Initializes a new instance of the <see cref="ExceptionHandlingMiddleware"/> class.
 	/// </summary>
 	/// <param name="next"></param>
-	public ExceptionHandlingMiddleware(RequestDelegate next) {
+	/// <param name="logger"></param>
+	public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger) {
 
 		_next = next;
+		_logger = logger;
 	}
 
 	/// <summary>
