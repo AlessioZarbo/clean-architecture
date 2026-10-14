@@ -1,6 +1,9 @@
 using Application;
+using Application.Validators.User;
+using FluentValidation;
 using Infrastructure;
 using Scalar.AspNetCore;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,12 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// Registra tutti i validatori presenti nell'assembly
+builder.Services.AddValidatorsFromAssemblyContaining<UserCreateDtoValidator>();
+
+// Attiva l'automazione MVC
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 

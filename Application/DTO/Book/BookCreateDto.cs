@@ -22,7 +22,7 @@ namespace Application.DTO.Book {
         /// <summary>
         /// Gets or sets the publication year of the book. This property is required and cannot be null.
         /// </summary>
-        public required DateOnly? PublicationYear { get; set; }
+        public DateOnly? PublicationYear { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the book is available. This property is required.

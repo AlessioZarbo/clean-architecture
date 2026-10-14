@@ -30,9 +30,9 @@ namespace Domain.Entities {
         public int? AuthorId { get; set; }
 
         /// <summary>
-        /// Gets or sets the publication year of the book. This property is required.
+        /// Gets or sets the publication year of the book. This property is optional and can be null.
         /// </summary>
-        public required DateOnly? PublicationYear { get; set; }
+        public DateOnly? PublicationYear { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the book is available. This property is required.
