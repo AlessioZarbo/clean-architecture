@@ -10,6 +10,10 @@ namespace Domain.Entities {
     public class Reservation {
 
         /// <summary>
+        /// Gets or sets the id of the reservation
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
         /// Gets or sets the list of books associated with the reservation. This property is optional and can be null.
         /// </summary>
         public List<Book>? Books { get; set; }
@@ -46,7 +50,7 @@ namespace Domain.Entities {
             int userId,
             List<Book> books,
             int daysToReserve
-        ) { 
+        ) {
 
             if (userId <= 0) {
                 throw new ArgumentException("User ID must be greater than zero.", nameof(userId));

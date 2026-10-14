@@ -21,7 +21,7 @@ namespace Infrastructure {
             IConfiguration configuration) {
 
             services.AddSqlServer<LibraryDbContext>(
-                configuration.GetConnectionString("DefaultConnection"));
+                configuration.GetConnectionString("MacbookConnection"));
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
