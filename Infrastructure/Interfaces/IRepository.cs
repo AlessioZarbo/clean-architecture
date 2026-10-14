@@ -27,22 +27,22 @@ namespace Infrastructure.Interfaces {
         /// Creates a new entity of type T asynchronously.
         /// </summary>
         /// <param name="entity">The entity to create.</param>
-        /// <returns>The created entity.</returns>
-        Task<T> CreateAsync(T entity);
+        /// <returns></returns>
+        Task CreateAsync(T entity);
 
         /// <summary>
         /// Updates an existing entity of type T asynchronously.
         /// </summary>
         /// <param name="id">The ID of the entity to update.</param>
         /// <param name="entity">The updated entity.</param>
-        /// <returns>The updated entity.</returns>
-        Task<T> UpdateAsync(int id, T entity);
+        /// <returns></returns>
+        Task UpdateAsync(int id, T entity);
 
         /// <summary>
         /// Deletes an entity of type T by its ID asynchronously.
         /// </summary>
         /// <param name="id">The ID of the entity to delete.</param>
         /// <returns>The deleted entity.</returns>
-        Task<T> DeleteAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

@@ -15,14 +15,14 @@ namespace Application.DTO.Book {
         public required string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the publication year of the book. This property is required and cannot be null.
+        /// Gets or sets the author ID of the book. This property is required and cannot be null.
         /// </summary>
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
 
         /// <summary>
         /// Gets or sets the publication year of the book. This property is required and cannot be null.
         /// </summary>
-        public required DateOnly PublicationYear { get; set; }
+        public required DateOnly? PublicationYear { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the book is available. This property is required.

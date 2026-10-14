@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Infrastructure.Perstistence {
     public class UserRepository : IUserRepository {
-        public Task<User> CreateAsync(User entity) {
+        public Task CreateAsync(User entity) {
             throw new NotImplementedException();
         }
 
-        public Task<User> DeleteAsync(int id) {
+        public Task DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
@@ -22,7 +22,7 @@ namespace Infrastructure.Perstistence {
             throw new NotImplementedException();
         }
 
-        public Task<User> UpdateAsync(int id, User entity) {
+        public Task UpdateAsync(int id, User entity) {
             throw new NotImplementedException();
         }
     }

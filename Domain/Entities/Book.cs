@@ -50,7 +50,7 @@ namespace Domain.Entities {
         /// <exception cref="ArgumentException">An argument is invalid.</exception>
         public static Book Create(
             string title,
-            Author? author,
+            int? authorId,
             DateOnly? publicationYear,
             bool isAvailable
         ) {
@@ -59,9 +59,17 @@ namespace Domain.Entities {
                 throw new ArgumentException("Title cannot be null or empty.", nameof(title));
             }
 
+            if (authorId.HasValue && authorId <= 0) {
+                throw new ArgumentException("AuthorId must be a positive integer.", nameof(authorId));
+            }
+
+            if (publicationYear.HasValue && publicationYear.Value > DateOnly.FromDateTime(DateTime.Now)) {
+                throw new ArgumentException("Publication year cannot be in the future.", nameof(publicationYear));
+            }
+
             return new Book {
                 Title = title,
-                Author = author,
+                AuthorId = authorId,
                 PublicationYear = publicationYear,
                 IsAvailable = isAvailable
             };

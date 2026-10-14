@@ -52,8 +52,8 @@ namespace API.Controllers {
         [HttpPost]
         public async Task<IActionResult> CreateBook([FromBody] BookCreateDto bookDto) {
 
-            var createdBook = await _bookService.CreateBookAsync(bookDto);
-            return Ok(createdBook);
+            await _bookService.CreateBookAsync(bookDto);
+            return Ok();
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace API.Controllers {
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookCreateDto bookDto) {
 
-            var updatedBook = await _bookService.UpdateBookAsync(id, bookDto);
-            return Ok(updatedBook);
+            await _bookService.UpdateBookAsync(id, bookDto);
+            return Ok();
         }
 
         /// <summary>

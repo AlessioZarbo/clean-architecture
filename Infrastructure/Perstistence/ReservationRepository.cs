@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Infrastructure.Perstistence {
     public class ReservationRepository : IReservationRepository {
-        public Task<Reservation> CreateAsync(Reservation entity) {
+        public Task CreateAsync(Reservation entity) {
             throw new NotImplementedException();
         }
 
-        public Task<Reservation> DeleteAsync(int id) {
+        public Task DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
@@ -22,7 +22,7 @@ namespace Infrastructure.Perstistence {
             throw new NotImplementedException();
         }
 
-        public Task<Reservation> UpdateAsync(int id, Reservation entity) {
+        public Task UpdateAsync(int id, Reservation entity) {
             throw new NotImplementedException();
         }
     }
