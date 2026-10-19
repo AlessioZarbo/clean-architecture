@@ -33,6 +33,19 @@ namespace Infrastructure.Perstistence {
         }
 
         /// <summary>
+        /// Retrieves a paginated list of books from the database, including their associated authors.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Book>> GetAllPaginatedAsync(int page, int pageSize) {
+
+            return await _ctx.Books
+                .Include(b => b.Author)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Retrieves a book by its ID from the database, including its associated author.
         /// </summary>
         /// <param name="id">The ID of the book to retrieve.</param>

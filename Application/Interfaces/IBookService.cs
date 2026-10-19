@@ -17,6 +17,12 @@ namespace Application.Interfaces {
         Task<IEnumerable<BookDto>> GetAllBooksAsync();
 
         /// <summary>
+        /// Gets all books asynchronously with pagination.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<BookDto>> GetAllPaginatedAsync(int? page, int? pageSize);
+
+        /// <summary>
         /// Gets a book by its ID asynchronously.
         /// </summary>
         /// <param name="id">The ID of the book to retrieve.</param>

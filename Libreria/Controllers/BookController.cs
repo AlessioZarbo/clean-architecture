@@ -51,6 +51,21 @@ namespace API.Controllers {
         }
 
         /// <summary>
+        /// Gets a paginated list of books in the library.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet("paginated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPaginatedAsync(int? page, int? pageSize) {
+
+            var result = await _bookService.GetAllPaginatedAsync(page, pageSize);
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Gets a specific book by its ID.
         /// </summary>
         /// <param name="id">The ID of the book to retrieve.</param>

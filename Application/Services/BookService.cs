@@ -4,6 +4,7 @@ using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services {
@@ -13,7 +14,8 @@ namespace Application.Services {
     /// </summary>
     /// <param name="bookRepository">The repository for accessing book data.</param>
     /// <param name="logger">The logger for logging information and errors.</param>
-    public class BookService(IBookRepository bookRepository, ILogger<BookService> logger) : IBookService {
+    /// <param name="configuration">The configuration for the application.</param>
+    public class BookService(IBookRepository bookRepository, ILogger<BookService> logger, IConfiguration configuration) : IBookService {
 
         /// <summary>
         /// The repository for accessing book data.
@@ -24,6 +26,26 @@ namespace Application.Services {
         /// The logger for logging information and errors.
         /// </summary>
         private readonly ILogger<BookService> _logger =  logger;
+
+        /// <summary>
+        /// The configuration for the application.
+        /// </summary>
+        private readonly int _defaultPageSize = configuration.GetValue<int>("PaginationRules:DefaultPageSize");
+
+        /// <summary>
+        /// The default page number for pagination, retrieved from the application configuration.
+        /// </summary>
+        private readonly int _defaultPageNumber = configuration.GetValue<int>("PaginationRules:DefaultPageNumber");
+
+        /// <summary>
+        /// The minimum page size for pagination, retrieved from the application configuration.
+        /// </summary>
+        private readonly int _minPageSize = configuration.GetValue<int>("PaginationRules:MinPageSize");
+
+        /// <summary>
+        /// The maximum page size for pagination, retrieved from the application configuration.
+        /// </summary>
+        private readonly int _maxPageSize = configuration.GetValue<int>("PaginationRules:MaxPageSize");
 
         /// <summary>
         /// Retrieves all books from the repository and maps them to BookDto objects.
@@ -39,6 +61,28 @@ namespace Application.Services {
             _logger.LogInformation("All books retrieved.");
             _logger.LogDebug("Mapped books to DTOs.");
             return books == null ? throw new Exception("No books found.") : books.Select(MapToDto);
+        }
+
+        /// <summary>
+        /// Retrieves all books from the repository with pagination and maps them to BookDto objects.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <exception cref="PaginationException"></exception>
+        public async Task<IEnumerable<BookDto>> GetAllPaginatedAsync(int? page, int? pageSize) {
+
+            // Se nulli li setto tramite valore di configurazione
+            page ??= _defaultPageNumber;
+            pageSize ??= _defaultPageSize;
+
+            if (page < 1)
+                throw new PaginationException(page);
+
+            if (pageSize < _minPageSize || pageSize > _maxPageSize)
+                throw new PaginationException(pageSize, _minPageSize, _maxPageSize);
+
+            return (await _bookRepository.GetAllPaginatedAsync(page.Value, pageSize.Value)).Select(MapToDto);
         }
 
         /// <summary>

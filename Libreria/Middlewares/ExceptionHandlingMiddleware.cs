@@ -54,6 +54,13 @@ public class ExceptionHandlingMiddleware {
 				"Resource not found",
 				ex.Message);
 		}
+		catch (PaginationException ex) {
+			await WriteProblemDetailsAsync(
+				context,
+				StatusCodes.Status503ServiceUnavailable,
+				"Pagination error",
+				ex.Message);
+		}
 		catch (Exception e) {
 			await WriteProblemDetailsAsync(
 				context,
