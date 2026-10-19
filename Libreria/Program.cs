@@ -1,6 +1,7 @@
 using API.Middlewares;
 using Application;
 using Application.Validators.User;
+using Asp.Versioning;
 using FluentValidation;
 using Infrastructure;
 using Scalar.AspNetCore;
@@ -29,6 +30,26 @@ builder.Logging
         options.IncludeScopes = true;
         options.SingleLine = true;
         options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+    });
+
+// Aggiunta configurazione per ApiVersioning
+builder.Services
+    .AddProblemDetails()
+    .AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+        options.ApiVersionReader = ApiVersionReader.Combine(
+            new QueryStringApiVersionReader("api-version"),
+            new HeaderApiVersionReader("X-Version"),
+            new MediaTypeApiVersionReader("ver")
+        );
+    })
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
     });
 
 var app = builder.Build();

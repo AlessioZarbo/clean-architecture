@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Book;
 using Application.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,11 @@ namespace API.Controllers {
     /// Controller for managing books in the library.
     /// </summary>
     /// <param name="bookService">The service for managing books.</param>
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")] // VERSIONE COME HEADER
+    [Route("api/v{version:apiVersion}/[controller]")] // VERSIONE COME ROUTE
+    [ApiVersion(1.0)]
+    [ApiVersion(2.0)]
     public class BookController(IBookService bookService) : ControllerBase {
 
         /// <summary>
@@ -23,10 +27,27 @@ namespace API.Controllers {
         /// </summary>
         /// <returns>The list of all books in the library.</returns>
         [HttpGet]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBooks() {
 
             var books = await _bookService.GetAllBooksAsync();
             return Ok(books);
+        }
+
+        /// <summary>
+        /// Gets all books in the library for API version 2.0.
+        /// </summary>
+        /// <returns>The list of all books in the library for API version 2.0.</returns>
+        [HttpGet]
+        [MapToApiVersion("2.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetBooksv2() {
+
+            var books = await _bookService.GetAllBooksAsync();
+            return Ok("Test v2");
         }
 
         /// <summary>

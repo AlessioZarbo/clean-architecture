@@ -103,6 +103,6 @@ public class BookControllerTest {
 	[Test]
 	public async Task When_Product_Dont_Exist_Then_GetById_Thrown_Exception() {
 
-		// Da implementare
+		throw new NotImplementedException();
 	}
 }
