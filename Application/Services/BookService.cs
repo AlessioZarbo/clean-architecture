@@ -70,7 +70,7 @@ namespace Application.Services {
         /// <param name="pageSize"></param>
         /// <returns></returns>
         /// <exception cref="PaginationException"></exception>
-        public async Task<IEnumerable<BookDto>> GetAllPaginatedAsync(int? page, int? pageSize) {
+        public async Task<BookPagedDto> GetAllPaginatedAsync(int? page, int? pageSize) {
 
             // Se nulli li setto tramite valore di configurazione
             page ??= _defaultPageNumber;
@@ -82,7 +82,14 @@ namespace Application.Services {
             if (pageSize < _minPageSize || pageSize > _maxPageSize)
                 throw new PaginationException(pageSize, _minPageSize, _maxPageSize);
 
-            return (await _bookRepository.GetAllPaginatedAsync(page.Value, pageSize.Value)).Select(MapToDto);
+            var pagedDto = new BookPagedDto {
+                Books = (await _bookRepository.GetAllPaginatedAsync(page.Value, pageSize.Value)).Select(MapToDto),
+                TotalCount = await _bookRepository.TotalCountAsync(),
+                CurrentPage = page.Value,
+                PageSize = pageSize.Value
+            };
+
+            return pagedDto ;
         }
 
         /// <summary>

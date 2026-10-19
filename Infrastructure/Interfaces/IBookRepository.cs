@@ -11,5 +11,11 @@ namespace Infrastructure.Interfaces {
         /// </summary>
         /// <returns></returns>
         Task <IEnumerable<Book>> GetAllPaginatedAsync(int page, int pageSize);
+
+        /// <summary>
+        /// Gets the total count of books asynchronously.
+        /// </summary>
+        /// <returns></returns>
+        Task <int> TotalCountAsync();
     }
 }

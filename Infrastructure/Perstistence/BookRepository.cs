@@ -85,5 +85,11 @@ namespace Infrastructure.Perstistence {
             var book = await GetByIdAsync(id);
             _ctx.Books.Remove(book);
         }
+
+        /// <summary>
+        /// Retrieves the total count of books in the database.
+        /// </summary>
+        /// <returns>The total count of books.</returns>
+        public async Task<int> TotalCountAsync() => await _ctx.Books.CountAsync();
     }
 }
